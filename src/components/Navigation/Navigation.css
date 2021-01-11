@@ -1,0 +1,33 @@
+.navigation {
+  background-color: rgb(240, 240, 240);
+  position: relative;
+  min-width: 52px;
+  max-width: 270px;
+}
+
+.nav_icon {
+  padding: .5rem;
+  font-size: 36px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
+.navigation__list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.navigation__list a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  padding: .5rem 1rem;
+}
+
+.navigation_hidden {
+  display: none;
+}

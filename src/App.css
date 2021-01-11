@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.App {
+  display: flex;
+  min-height: 100vh;
+}
+
+.task {
+  flex-grow: 1;
+  flex-basis: 80%;
+}

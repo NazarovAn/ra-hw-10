@@ -1,0 +1,20 @@
+.feed_wrapper {
+  width: 90%;
+  max-width: 700px;
+  margin: auto;
+}
+
+.feed__btn {
+  float: right;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  padding: .3rem .5rem;
+  background-color: rgb(80, 80, 200);
+  border: rgb(40, 40, 200);
+  border-radius: 2px;
+}
+
+.red_btn {
+  background-color: rgb(180, 40, 40);
+}
