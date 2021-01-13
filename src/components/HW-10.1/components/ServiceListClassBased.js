@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeService } from '../actions/actionCreators';
+import { removeService, getEditedServiceId, changeServiceField, clearServiceField, clearEditedServiceId } from '../actions/actionCreators';
 
 class ServiceListClassBased extends Component {
   handleRemove = (id) => {
+    if (this.props.editedServiceId === id) {
+      this.props.onClear();  
+    }
     this.props.removeService(id);
+  }
+
+  handleEdit = (service) => {
+    this.props.editService(service);
   }
 
   render() {
@@ -13,11 +20,13 @@ class ServiceListClassBased extends Component {
 
     return (
       <ul className="pd_1" >
-        {items.map(({ id, name, price }) => {
+        {items.map((service) => {
+          const { id, name, price } = service;
           return (
             <li key={ id }>
-              { `${ name } ${ price }` }
+              <span>{ name } { price }</span>&nbsp;
               <button className="services_button" onClick={ () => this.handleRemove(id) }>X</button>
+              <button className="services_button" onClick={ () => this.handleEdit(service) }>Edit</button>
             </li>
           )
         })}
@@ -30,18 +39,29 @@ ServiceListClassBased.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      price: PropTypes.number,
+      price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     })
   ).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  items: state.seviceList,
+  items: state.serviceList,
+  editedServiceId: state.serviceEdit,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeService: id => dispatch(removeService(id))
+    removeService: (id) => dispatch(removeService(id)),
+    editService: (service) => {
+      const { id, name, price } = service;
+      dispatch(getEditedServiceId(id));
+      dispatch(changeServiceField('name', name));
+      dispatch(changeServiceField('price', price));
+    },
+    onClear: () => {
+      dispatch(clearServiceField());
+      dispatch(clearEditedServiceId());
+    }
   }
 }
 
