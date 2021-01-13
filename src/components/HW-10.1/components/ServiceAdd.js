@@ -1,43 +1,45 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { changeServiceField, addService } from '../actions/actionCreators';
-
-const selectServiceAdd = ({ serviceAdd }) => serviceAdd; // const selectServiceAdd = (state) => state.serviceAdd;
+import { useDispatch, useSelector } from 'react-redux';
+import { addService, changeServiceField, saveEditedService, clearServiceField, clearEditedServiceId } from '../actions/actionCreators';
 
 export default function ServiceAdd() {
-  const item = useSelector(selectServiceAdd);
   const dispatch = useDispatch();
-
-  // const handleChange = React.useCallback(
-  //   (event) => {
-  //     const { name, value } = event.target;
-  //     dispatch(changeServiceField(name, value));
-  //   },
-  //   [dispatch]
-  // )
-  // const handleSubmit =  React.useCallback(
-  //   (event) => {
-  //     event.preventDefault();
-  //     dispatch(addService(item.name, item.price));
-  //   },
-  //   [item, dispatch]
-  // )
+  const item = useSelector(state => state.serviceAdd);
+  const editedServiceId = useSelector(state => state.serviceEdit);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    dispatch(changeServiceField(name, value));
-  }
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    dispatch(addService(item.name, item.price));
+    dispatch(changeServiceField(event.target.name, event.target.value ));
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if(editedServiceId) {
+      const editedService = {
+        id: editedServiceId,
+        name: item.name,
+        price: item.price,
+      }
+
+      dispatch(saveEditedService(editedService));
+      dispatch(clearEditedServiceId());
+    } else {
+      dispatch(addService({ name: item.name, price: item.price }));
+    }
+    dispatch(clearServiceField());
+  }
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    dispatch(clearServiceField());
+    dispatch(clearEditedServiceId());
+  }
 
   return (
     <form onSubmit={ handleSubmit }>
-      <input className="services_input" name='name' onChange={ handleChange } value={ item.name } />
-      <input className="services_input" name='price' onChange={ handleChange } value={ item.price } />
-      <button className="services_button" type='submit'>Save</button>
+      <input className="services_input" onChange={ handleChange } name="name" value={ item.name } />
+      <input className="services_input" onChange={ handleChange } name="price" value={ item.price } />
+      <button className="services_button">Save</button>
+      <button className="services_button" onClick={ handleCancel }>Cancel</button>
     </form>
   )
 }
