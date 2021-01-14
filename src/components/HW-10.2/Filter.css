@@ -9,3 +9,11 @@
 .services_button {
   padding: .3rem .6rem;
 }
+
+.flex {
+  display: flex;
+}
+
+.flex_column {
+  max-width: 550px;
+}

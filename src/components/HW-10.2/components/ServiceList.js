@@ -6,7 +6,6 @@ import {
   changeServiceField,
   clearServiceField,
   clearEditedServiceId,
-  // removeFromFilteredList
 } from '../actions/actionCreators';
 
 export default function ServiceList() {

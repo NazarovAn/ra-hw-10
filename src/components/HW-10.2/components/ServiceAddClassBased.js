@@ -35,8 +35,8 @@ class ServiceAddClassBased extends Component {
     const { item } = this.props;
     return (
     <form onSubmit={ this.handleSubmit }>
-      <input className="services_input" name='name' onChange={ this.handleChange } value={ item.name } />
-      <input className="services_input" name='price' onChange={ this.handleChange } value={ item.price } />
+      <input className="services_input" name='name' onChange={ this.handleChange } placeholder="Название" value={ item.name } />
+      <input className="services_input" name='price' onChange={ this.handleChange } placeholder="Цена" value={ item.price } />
       <button className="services_button" type='submit'>Save</button>
       <button className="services_button" type='submit' onClick={ this.handleCancel }>Cancel</button>
     </form>

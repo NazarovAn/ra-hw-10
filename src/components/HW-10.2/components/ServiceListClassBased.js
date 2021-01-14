@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeService, getEditedServiceId, changeServiceField, clearServiceField, clearEditedServiceId } from '../actions/actionCreators';
+import {
+  removeService,
+  getEditedServiceId,
+  changeServiceField,
+  clearServiceField,
+  clearEditedServiceId
+} from '../actions/actionCreators';
 
 class ServiceListClassBased extends Component {
   handleRemove = (id) => {
@@ -16,11 +22,12 @@ class ServiceListClassBased extends Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, filteredList, isFiltered } = this.props;
+    const displayedList = isFiltered ? filteredList : items;
 
     return (
       <ul className="pd_1" >
-        {items.map((service) => {
+        {displayedList.map((service) => {
           const { id, name, price } = service;
           return (
             <li key={ id }>
@@ -47,6 +54,8 @@ ServiceListClassBased.propTypes = {
 const mapStateToProps = (state) => ({
   items: state.serviceList,
   editedServiceId: state.serviceEdit,
+  filteredList: state.serviceFilter.filteredList,
+  isFiltered: state.serviceFilter.isFiltered,
 });
 
 const mapDispatchToProps = (dispatch) => {
