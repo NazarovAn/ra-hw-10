@@ -1,0 +1,50 @@
+.market_item {
+  min-width: 120px;
+  width: 18%;
+  position: relative;
+  list-style: none;
+  font-size: 1.15em;
+  margin-right: 10px;
+}
+.market_item:last-child {
+  margin-right: 0;
+}
+
+.market_item__img {
+  width: 100%;
+}
+
+.discount_icon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(230, 0, 0);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 3px;
+  left: 3px;
+  color: white;
+  font-size: 1.20em;
+}
+.discount_icon__text {
+  font-size: 0.7em;
+  font-weight: 700;
+  transform: rotate(30deg);
+}
+
+.market_item__price_wrapper span:first-child {
+  font-size: 1.15em;
+  font-weight: bold;
+  margin-right: 5px;
+}
+.market_item__old_price {
+  font-size: .9rem;
+  color: gray;
+  text-decoration: line-through;
+}
+
+.market_item__link {
+  text-decoration: none;
+}
