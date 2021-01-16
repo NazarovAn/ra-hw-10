@@ -5,6 +5,7 @@
   list-style: none;
   font-size: 1.15em;
   margin-right: 10px;
+  margin-bottom: 20px;
 }
 .market_item:last-child {
   margin-right: 0;

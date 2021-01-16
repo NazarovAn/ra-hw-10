@@ -15,16 +15,21 @@ export default function AddMarketItem() {
   const { name, price, image, link, saleType, oldPrice } = item;
   const imageInputRef = useRef();
 
+  const dispatchNumbersInput = (name, value, stateValue) => {
+    if (/^[0-9]+$/.test(value) || value === '') {
+      return dispatch(changeMarketItemField(name, value));
+    } else {
+      return stateValue;
+    }
+  }
+
   const handleInput = (event) => {
     const { name, value } = event.target;
     switch (name) {
       case 'price':
-        if (/^[0-9]+$/.test(value) || value === '') {
-          return dispatch(changeMarketItemField(name, value));          
-        } else {
-          return price;
-        }
-
+        return dispatchNumbersInput(name, value, price);
+      case 'oldPrice':
+        return dispatchNumbersInput(name, value, oldPrice);
       default:
         dispatch(changeMarketItemField(name, value));
     }
@@ -37,21 +42,17 @@ export default function AddMarketItem() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (/^(https?:\/\/)/.test(item.link)) {
-      const newItem = {
-        id: nanoid(),
-        name: item.name,
-        price: item.price,
-        image: item.image,
-        link: item.link,
-        saleType: item.saleType,
-        oldPrice: item.oldPrice,
-      }
-      dispatch(addMarketItem(newItem));
-      dispatch(clearMarketItemFields());
-    } else {
-      dispatch(changeMarketItemField('link', 'Недействительная ссылка'));
+    const newItem = {
+      id: nanoid(),
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      link: item.link,
+      saleType: item.saleType,
+      oldPrice: item.oldPrice,
     }
+    dispatch(addMarketItem(newItem));
+    dispatch(clearMarketItemFields());
   }
 
   const handleAddImage = (event) => {
@@ -62,17 +63,14 @@ export default function AddMarketItem() {
   const handleImageUpload = (event) => {
     const image = event.target.files[0];
 
-    // const reader = new FileReader();
-    // reader.onload = function(e) {
-    //   // The file's text will be printed here
-    //   console.log(e.target.result)
-    // };
-    // reader.readAsText(image);
-
-    // console.log(image);
-    // if (/^(image)/.test(image.type)) {
-    //   console.log('it IS image');
-    // }
+    if (/^(image)/.test(image.type)) {
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = () => {
+        const { result } = reader;
+        dispatch(changeMarketItemField('image', result));
+      };
+    }
   }
 
   return (
@@ -93,11 +91,12 @@ export default function AddMarketItem() {
         :
           null 
       }
+      { image ? <img className='image_preview' src={ image } alt='image_preview' /> : null }
       <div>
         <button onClick={ handleAddImage } className='form_submit_btn'>Выбрать изображение</button>
         <button className='form_submit_btn'>Продолжить</button>
-      </div>
-      <input ref={ imageInputRef } className='form_input file_input' onChange={ handleImageUpload } name='image' value={ image === null ? '' : image } placeholder='Изображение' type='file' />
+      </div>    
+      <input ref={ imageInputRef } className='form_input file_input' onChange={ handleImageUpload } name='image' placeholder='Изображение' type='file' />
     </form>
   )
 }

@@ -9,7 +9,7 @@ export default function MarketItem(props) {
     switch (saleType) {
       case 'discount':
         const discountPercent = Math.round((oldPrice - price) / (oldPrice / 100));
-        return Number.isNaN(discountPercent) ? 'Акция' : discountPercent + '%';    
+        return Number.isNaN(discountPercent) ? <span className='discount_icon__text'>Акция</span> : discountPercent + '%';    
       case 'latest':
         return <span className='discount_icon__text'>New</span>;
       default:
@@ -24,7 +24,7 @@ export default function MarketItem(props) {
   return (
     <li className='market_item'>
       { saleType ? <div className='discount_icon'>{ chooseDiscountText() }</div> : null }
-      <img className='market_item__img' src={ image } alt={ name } />
+      <img className='market_item__img' src={ image ? image : 'https://via.placeholder.com/120x150.png' } alt={ name } />
       <div className='market_item__price_wrapper'>
         <span>{ price }{ rublSign }</span>&nbsp;
         { oldPrice ? <span className='market_item__old_price'>{ oldPrice }{ rublSign }</span> : null }

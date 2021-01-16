@@ -1,10 +1,10 @@
 .market_list {
   display: flex;
+  flex-wrap: wrap;
   min-width: 700px;
   width: 80%;
   margin: auto;
   max-width: 1000px;
   justify-content: space-evenly;
   padding: .5rem .7rem;
-  overflow-x: scroll;
 }
