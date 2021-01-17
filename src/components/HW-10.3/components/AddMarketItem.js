@@ -15,7 +15,7 @@ export default function AddMarketItem() {
   const { name, price, image, link, saleType, oldPrice } = item;
   const imageInputRef = useRef();
 
-  const dispatchNumbersInput = (name, value, stateValue) => {
+  const dispatchPriceInput = (name, value, stateValue) => {
     if (/^[0-9]+$/.test(value) || value === '') {
       return dispatch(changeMarketItemField(name, value));
     } else {
@@ -27,9 +27,9 @@ export default function AddMarketItem() {
     const { name, value } = event.target;
     switch (name) {
       case 'price':
-        return dispatchNumbersInput(name, value, price);
+        return dispatchPriceInput(name, value, price);
       case 'oldPrice':
-        return dispatchNumbersInput(name, value, oldPrice);
+        return dispatchPriceInput(name, value, oldPrice);
       default:
         dispatch(changeMarketItemField(name, value));
     }
